@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from "react";
 
 const Posts = () => {
-  const [posts, changePosts] = useState(["test"]);
+  const [posts, changePosts] = useState([]);
 
+  const fetchPosts = async () => {
+    try {
+      await fetch("http://localhost:3000/posts")
+        .then((res) => res.json())
+        .then((data) => changePosts(data));
+      console.log("Successfully fetched data from api");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await fetch("http://localhost:3000/posts")
-          .then((res) => res.json())
-          .then((data) => changePosts(data));
-        console.log("Successfully fetched data from api");
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
+    fetchPosts();
+    //keep checking the API for data changes every 10 seconds
+    const fetchDelay = setInterval(() => {
+      fetchPosts();
+    }, 10000);
+    //clears if the user exits the page
+    return () => clearInterval(fetchDelay);
   }, []);
 
   return posts.map((post, index) => {
