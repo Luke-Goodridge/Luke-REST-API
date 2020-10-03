@@ -29,6 +29,7 @@ const Posts = () => {
         <h3>{post.title}</h3>
         <p>{post.Description}</p>
         <p>{post.date}</p>
+        <button>Delete</button>
       </div>
     );
   });
