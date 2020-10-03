@@ -3,7 +3,7 @@ import Posts from "./components/posts";
 import "./App.css";
 
 function App() {
-  const testAdd = (e) => {
+  const AddNewPost = (e) => {
     e.preventDefault();
     const title = document.querySelector("#postTitle").value;
     const desc = document.querySelector("#postDesc").value;
@@ -22,12 +22,13 @@ function App() {
       .then((result) => {
         console.log(result);
       });
+    document.querySelector("#newPostForm").reset();
   };
   return (
     <div>
       <h1>Luke's API</h1>
       <Posts />
-      <form onSubmit={testAdd} id="newPostForm">
+      <form onSubmit={AddNewPost} id="newPostForm">
         <input
           id="postTitle"
           placeholder="Please enter the title"
